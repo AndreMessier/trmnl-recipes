@@ -1,0 +1,18 @@
+name: 'Bethesda Station Bus'
+no_screen_padding: 'no'
+dark_mode: 'no'
+strategy: polling
+polling_verb: get
+polling_url: |-
+  https://api.wmata.com/NextBusService.svc/json/jPredictions?StopID=2001227
+  https://api.wmata.com/NextBusService.svc/json/jPredictions?StopID=2001249
+  https://api.wmata.com/NextBusService.svc/json/jPredictions?StopID=2002634
+polling_headers: |
+  api_key= {{ api_key }}
+refresh_interval: 15
+id: null
+custom_fields:
+  -
+    keyname: api_key
+    field_type: string
+    name: 'WMATA API Key'

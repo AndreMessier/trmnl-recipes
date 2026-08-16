@@ -1,0 +1,16 @@
+<div class="layout layout--col gap--space-between">
+  {% assign items = data.MediaContainer.Metadata %}
+  {% assign count = trmnl.plugin_settings.custom_fields_values.item_count | default: 5 %}
+  <div style="display:flex; flex-direction:column; gap:14px; padding-top:6px; width:100%;">
+    {% for item in items limit: count %}
+      <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px dashed black; padding-bottom:10px;">
+        <span style="font-weight:600; font-size:22px; color:black;">{{ item.title }}</span>
+        <span style="font-size:16px; color:black; white-space:nowrap; margin-left:12px;">{{ item.year }} &bull; {{ item.type | capitalize }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+<div class="title_bar">
+  <span class="title">Plex Recent Movies</span>
+  <span class="instance">{{ items.size }} items</span>
+</div>

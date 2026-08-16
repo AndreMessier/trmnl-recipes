@@ -1,0 +1,20 @@
+name: 'Plex Recent Movies'
+no_screen_padding: 'no'
+dark_mode: 'no'
+strategy: polling
+polling_verb: get
+polling_url: 'https://discover.provider.plex.tv/library/sections/watchlist/all?sort=originallyAvailableAt:desc&type=1&X-Plex-Client-Identifier=larapaper-watchlist&X-Plex-Product=LaraPaper'
+polling_headers: 'X-Plex-Token= {{ plex_token }}'
+refresh_interval: 60
+id: null
+custom_fields:
+  -
+    keyname: plex_token
+    field_type: string
+    name: 'Plex Token'
+    description: 'Your X-Plex-Token'
+  -
+    keyname: item_count
+    field_type: number
+    name: 'Items to show'
+    default: 5

@@ -1,0 +1,26 @@
+<div class="layout layout--col gap--space-between">
+  {% assign count = trmnl.plugin_settings.custom_fields_values.item_count | default: 5 %}
+  {% assign episodes = data.MediaContainer.Metadata | sort: 'addedAt' | reverse %}
+  {% assign seen = '' %}
+  {% assign shown = 0 %}
+  <div style="display:flex; flex-direction:column; gap:14px; padding-top:6px; width:100%;">
+    {% for ep in episodes %}
+      {% assign show_name = ep.grandparentTitle %}
+      {% unless seen contains show_name %}
+        {% if shown < count %}
+          {% assign new_count = episodes | where: 'grandparentTitle', show_name | size %}
+          <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px dashed black; padding-bottom:10px;">
+            <span style="font-weight:600; font-size:22px; color:black;">{{ show_name }}</span>
+            <span style="font-size:16px; color:black; white-space:nowrap; margin-left:12px;">{{ new_count }} new ep{% if new_count != 1 %}s{% endif %}</span>
+          </div>
+          {% assign shown = shown | plus: 1 %}
+        {% endif %}
+        {% assign seen = seen | append: show_name | append: '|||' %}
+      {% endunless %}
+    {% endfor %}
+  </div>
+</div>
+<div class="title_bar">
+  <span class="title">New Episodes</span>
+  <span class="instance">{{ shown }} shows</span>
+</div>

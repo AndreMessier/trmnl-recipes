@@ -1,0 +1,22 @@
+<div class="layout layout--col gap--space-between">
+  {% assign count = trmnl.plugin_settings.custom_fields_values.item_count | default: 5 %}
+  {% assign cutoff = -3 | days_ago %}
+  {% assign shows = data.MediaContainer.Metadata | sort: 'lastEpisodeOriginallyAvailableAt' | reverse %}
+  {% assign shown = 0 %}
+  <div style="display:flex; flex-direction:column; gap:14px; padding-top:6px; width:100%;">
+    {% for item in shows %}
+      {% assign ep_date = item.lastEpisodeOriginallyAvailableAt | default: item.originallyAvailableAt %}
+      {% if ep_date and ep_date <= cutoff and shown < count %}
+        <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px dashed black; padding-bottom:10px;">
+          <span style="font-weight:600; font-size:22px; color:black;">{{ item.title }}</span>
+          <span style="font-size:16px; color:black; white-space:nowrap; margin-left:12px;">{{ ep_date }}</span>
+        </div>
+        {% assign shown = shown | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+<div class="title_bar">
+  <span class="title">Plex Recent Episodes</span>
+  <span class="instance">{{ shown }} shows</span>
+</div>

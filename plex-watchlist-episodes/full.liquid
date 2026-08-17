@@ -1,6 +1,8 @@
 <div class="layout layout--col gap--space-between">
   {% assign count = trmnl.plugin_settings.custom_fields_values.item_count | default: 5 %}
-  {% assign cutoff = -3 | days_ago %}
+  {% assign future_days = trmnl.plugin_settings.custom_fields_values.future_days | default: 3 %}
+  {% assign neg_days = future_days | times: -1 %}
+  {% assign cutoff = neg_days | days_ago %}
   {% assign shows = data.MediaContainer.Metadata | sort: 'lastEpisodeOriginallyAvailableAt' | reverse %}
   {% assign shown = 0 %}
   <div style="display:flex; flex-direction:column; gap:14px; padding-top:6px; width:100%;">

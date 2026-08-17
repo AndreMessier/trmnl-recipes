@@ -17,7 +17,8 @@ Your Plex Watchlist movies, newest release first. Data source: Plex cloud
 
 ### `plex-watchlist-episodes`
 Your Plex Watchlist TV shows, sorted by most recent episode air date (not premiere date),
-excludes anything more than 3 days out. Data source: Plex cloud. Needs: personal Plex token.
+excludes anything more than N days out (configurable, default 3). Data source: Plex cloud.
+Needs: personal Plex token.
 
 ![plex-watchlist-episodes](screenshots/plex-watchlist-episodes.png)
 

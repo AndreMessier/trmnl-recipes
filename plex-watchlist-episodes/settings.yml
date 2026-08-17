@@ -17,3 +17,9 @@ custom_fields:
     field_type: number
     name: 'Items to show'
     default: 5
+  -
+    keyname: future_days
+    field_type: number
+    name: 'Show upcoming episodes within (days)'
+    description: 'Episodes airing within this many days from today will still be shown; anything further out is excluded.'
+    default: 3

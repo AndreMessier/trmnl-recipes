@@ -43,3 +43,9 @@ See [`CUSTOM_PLUGINS.md`](../CUSTOM_PLUGINS.md) in the parent directory for the 
 including bugs found and fixed in *other* existing recipes along the way (not included in this
 repo, since those are fixes to someone else's code, not new plugins — worth submitting as PRs
 against their original repos instead).
+
+## Authorship
+
+These recipes were authored with [Claude Code](https://claude.com/claude-code), working through
+LaraPaper's actual database and container to build, test, and debug each recipe against live
+data before exporting it here.

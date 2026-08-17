@@ -7,13 +7,37 @@ a submission to the [community recipe catalog](https://github.com/bnussbau/trmnl
 
 ## Recipes
 
-| Folder | What it shows | Data source | Auth needed |
-|---|---|---|---|
-| `plex-watchlist-movies` | Your Plex Watchlist movies, newest release first | Plex cloud (`discover.provider.plex.tv`) | Personal Plex token |
-| `plex-watchlist-episodes` | Your Plex Watchlist TV shows, sorted by most recent episode air date (not premiere date), excludes anything more than 3 days out | Plex cloud | Personal Plex token |
-| `plex-server-new-movies` | Recently added movies on your own Plex Media Server | Your PMS | Personal Plex token + your server URL |
-| `plex-server-new-episodes` | Recently added TV episodes on your own PMS, aggregated by show (not one row per episode) | Your PMS | Personal Plex token + your server URL |
-| `wmata-bethesda-bus` | Combined bus arrival board for all three Metrobus routes serving Bethesda Station (D96, M22, M70) | WMATA NextBusService API | Free WMATA developer API key |
+*(Screenshots use stubbed example titles/times, not real personal data.)*
+
+### `plex-watchlist-movies`
+Your Plex Watchlist movies, newest release first. Data source: Plex cloud
+(`discover.provider.plex.tv`). Needs: personal Plex token.
+
+![plex-watchlist-movies](screenshots/plex-watchlist-movies.png)
+
+### `plex-watchlist-episodes`
+Your Plex Watchlist TV shows, sorted by most recent episode air date (not premiere date),
+excludes anything more than 3 days out. Data source: Plex cloud. Needs: personal Plex token.
+
+![plex-watchlist-episodes](screenshots/plex-watchlist-episodes.png)
+
+### `plex-server-new-movies`
+Recently added movies on your own Plex Media Server. Data source: your PMS. Needs: personal
+Plex token + your server URL.
+
+![plex-server-new-movies](screenshots/plex-server-new-movies.png)
+
+### `plex-server-new-episodes`
+Recently added TV episodes on your own PMS, aggregated by show (not one row per episode).
+Data source: your PMS. Needs: personal Plex token + your server URL.
+
+![plex-server-new-episodes](screenshots/plex-server-new-episodes.png)
+
+### `wmata-bethesda-bus`
+Combined bus arrival board for all three Metrobus routes serving Bethesda Station (D96, M22,
+M70). Data source: WMATA NextBusService API. Needs: free WMATA developer API key.
+
+![wmata-bethesda-bus](screenshots/wmata-bethesda-bus.png)
 
 ## Setup
 

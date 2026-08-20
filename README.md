@@ -1,9 +1,16 @@
-# Custom TRMNL / LaraPaper Recipes
+# Custom TRMNL / LaraPaper Recipes (Plex)
 
-A small collection of custom recipes built for a self-hosted [LaraPaper](https://github.com/usetrmnl/larapaper)
-instance. Each folder is a standalone recipe in the standard `settings.yml` + `.liquid` format,
-importable via LaraPaper's **Plugins → Import → Import Recipe Archive**, or usable as a base for
-a submission to the [community recipe catalog](https://github.com/bnussbau/trmnl-recipe-catalog).
+A small collection of custom Plex recipes built for a self-hosted
+[LaraPaper](https://github.com/usetrmnl/larapaper) instance. Each folder is a standalone recipe
+in the standard `settings.yml` + `.liquid` format, importable via LaraPaper's
+**Plugins → Import → Import Recipe Archive**, or usable as a base for a submission to the
+[community recipe catalog](https://github.com/bnussbau/trmnl-recipe-catalog).
+
+*(This repo used to also include a WMATA bus recipe — that's now split out into its own repo,
+[trmnl-wmata-bus](https://github.com/AndreMessier/trmnl-wmata-bus), so the WMATA and Plex
+recipes can be versioned independently. The repo name here stays `trmnl-recipes` rather than
+being renamed to something Plex-specific, since the already-merged catalog entries for these 4
+recipes reference this exact repo path.)*
 
 ## Recipes
 
@@ -33,16 +40,6 @@ Recently added TV episodes on your own PMS, aggregated by show (not one row per 
 Data source: your PMS. Needs: personal Plex token + your server URL.
 
 ![plex-server-new-episodes](screenshots/plex-server-new-episodes.png)
-
-### `wmata-bethesda-bus` (plugin name: "WMATA Bus")
-Combined bus arrival board for **any set of WMATA bus stops**, merged and sorted by arrival
-time — not just Bethesda. Configure a comma-separated list of StopIDs (one per physical stop/bay;
-works with any number, including just one). Originally built for the three Metrobus routes/bays
-at Bethesda Station (D96, M22, M70), which remains the default example. Data source: WMATA
-NextBusService API. Needs: free WMATA developer API key + your stop ID(s) (find via
-[api.wmata.com/Bus.svc/json/jStops](https://developer.wmata.com/) or the WMATA trip planner).
-
-![wmata-bethesda-bus](screenshots/wmata-bethesda-bus.png)
 
 ## Setup
 
@@ -80,36 +77,16 @@ configuration values at render time.
 - **Plex server section IDs**: visit `http://<your-server>:32400/library/sections` (with your
   token) to find the numeric ID for your Movies/TV Shows libraries — this varies per server
   depending on setup order, so it's not something that can be hardcoded.
-- **WMATA API key**: free signup at [developer.wmata.com](https://developer.wmata.com/).
-- **Title text** (all 4 Plex recipes): the title bar text is configurable via a `title_text`
-  field, defaulting to the recipe's original title (e.g. "Plex Recent Movies"). Useful if you're
+- **Title text** (all 4 recipes): the title bar text is configurable via a `title_text` field,
+  defaulting to the recipe's original title (e.g. "Plex Recent Movies"). Useful if you're
   running more than one instance of a recipe — e.g. one per household member's Plex — and want
-  each screen labeled distinctly. `wmata-bethesda-bus` has the same field too, defaulting to
-  "WMATA Bus".
+  each screen labeled distinctly.
 
 ## Notes
 
 - The `plex-watchlist-episodes` sort (by last-aired-episode date) happens client-side in the
   Liquid template, not via the Plex API's own `sort` parameter — Plex silently ignores
   `sort=lastEpisodeOriginallyAvailableAt` server-side, so this has to be handled in the recipe.
-- The `wmata-bethesda-bus` recipe fetches an arbitrary number of stop IDs via LaraPaper's
-  multi-URL `polling_url` support — a Liquid `{% for %}` loop over the comma-separated `stop_ids`
-  field generates one URL per stop, newline-separated, which LaraPaper fetches in parallel and
-  merges into `data.IDX_0`, `data.IDX_1`, etc. (dynamic bracket-notation lookup, `data[key]`,
-  works fine in this Liquid engine — just don't seed an array accumulator with `"" | split: ","`
-  before concatenating onto it, since that produces `[""]` rather than a true empty array, and
-  silently corrupts `sort` once real data is concatenated onto it).
-  **Gotcha**: LaraPaper's own polling logic silently *unwraps* the response when there's only
-  one URL — `data` becomes the raw single-stop response directly (`data.Predictions`) instead of
-  the wrapped `data.IDX_0.Predictions` shape used for 2+ stops. The template checks
-  `stops.size == 1` and branches accordingly; skipping this check works fine with multiple stops
-  configured but throws a Liquid "Internal exception" the moment someone configures just one.
-  **Second gotcha**: if you *change* `stop_ids` (e.g. from one stop to three, or vice versa)
-  via the settings UI, the screen can briefly show that same error — LaraPaper's cache-staleness
-  check is purely time-based (`refresh_interval`/`data_stale_minutes`), not aware that a config
-  change invalidated the previously-cached response's shape. It resolves itself on the next
-  natural refetch (within `refresh_interval`, 15 min by default), but there's no way for the
-  recipe itself to force an immediate one from within Liquid.
 
 See [`CUSTOM_PLUGINS.md`](../CUSTOM_PLUGINS.md) in the parent directory for the full writeup,
 including bugs found and fixed in *other* existing recipes along the way (not included in this

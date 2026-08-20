@@ -47,8 +47,32 @@ plugin's edit screen in LaraPaper (or TRMNL). No field in any of these files con
 credential; they're all Liquid placeholders (`{{ field_name }}`) resolved from your own saved
 configuration values at render time.
 
-- **Plex token**: Plex Web App → any title → ⋮ → Get Info → View XML → the `X-Plex-Token=`
-  value is in the resulting page's URL.
+- **Plex token** — two ways to get one:
+  1. **Via the Plex Web App** (needs access to some library content to click into — i.e. your
+     own Plex Media Server, or one shared with you): sign in at
+     [app.plex.tv](https://app.plex.tv) → click into any movie or show → the **⋮** menu →
+     **Get Info** → **View XML** (link in the lower-left of that panel). A new tab opens with an
+     XML page — the token is at the very end of the **browser's address bar URL**, not in the
+     page content itself: `...&X-Plex-Token=yourtokenhere`.
+  2. **Via a direct sign-in API call** (no Plex Media Server needed at all — works with just a
+     Plex account/Watchlist, useful if you don't have your own server): run this yourself in a
+     terminal, not through an AI assistant or anyone else, so your password is never shared with
+     a third party — only the resulting token is:
+     ```bash
+     curl -s -X POST "https://plex.tv/users/sign_in.json" \
+       -H "X-Plex-Client-Identifier: my-trmnl-setup" \
+       -H "X-Plex-Product: TRMNL" \
+       -d "user[login]=YOUR_PLEX_EMAIL" \
+       -d "user[password]=YOUR_PLEX_PASSWORD" \
+       | python3 -c "import json,sys; print(json.load(sys.stdin)['user']['authToken'])"
+     ```
+     This prints just the token. The `plex-watchlist-*` recipes only need this — they hit Plex's
+     cloud API, not a personal server — so this method is enough even if you don't run a PMS.
+     The `plex-server-*` recipes need an actual reachable server regardless of which method you
+     used to get the token.
+
+  Either way, treat the resulting token like a password — it grants full access to your Plex
+  account/server.
 - **Plex server section IDs**: visit `http://<your-server>:32400/library/sections` (with your
   token) to find the numeric ID for your Movies/TV Shows libraries — this varies per server
   depending on setup order, so it's not something that can be hardcoded.

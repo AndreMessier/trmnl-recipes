@@ -18,3 +18,9 @@ custom_fields:
     field_type: number
     name: 'Items to show'
     default: 5
+  -
+    keyname: title_text
+    field_type: string
+    name: 'Title text'
+    description: 'Text shown in the title bar. Customize this to identify whose Plex this is if you run more than one.'
+    default: 'Plex Recent Movies'

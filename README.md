@@ -77,6 +77,10 @@ configuration values at render time.
   token) to find the numeric ID for your Movies/TV Shows libraries — this varies per server
   depending on setup order, so it's not something that can be hardcoded.
 - **WMATA API key**: free signup at [developer.wmata.com](https://developer.wmata.com/).
+- **Title text** (all 4 Plex recipes): the title bar text is configurable via a `title_text`
+  field, defaulting to the recipe's original title (e.g. "Plex Recent Movies"). Useful if you're
+  running more than one instance of a recipe — e.g. one per household member's Plex — and want
+  each screen labeled distinctly.
 
 ## Notes
 

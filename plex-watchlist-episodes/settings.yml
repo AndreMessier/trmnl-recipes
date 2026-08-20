@@ -23,3 +23,9 @@ custom_fields:
     name: 'Show upcoming episodes within (days)'
     description: 'Episodes airing within this many days from today will still be shown; anything further out is excluded.'
     default: 3
+  -
+    keyname: title_text
+    field_type: string
+    name: 'Title text'
+    description: 'Text shown in the title bar. Customize this to identify whose Plex this is if you run more than one.'
+    default: 'Plex Recent Episodes'

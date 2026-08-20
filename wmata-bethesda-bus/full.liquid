@@ -1,11 +1,25 @@
 <div class="layout layout--col">
-  {% assign all = data.IDX_0.Predictions | concat: data.IDX_1.Predictions | concat: data.IDX_2.Predictions | sort: 'Minutes' %}
+  {% assign stops = trmnl.plugin_settings.custom_fields_values.stop_ids | split: "," %}
+  {% if stops.size == 1 %}
+    {% assign all = data.Predictions %}
+  {% else %}
+    {% for stop in stops %}
+      {% assign idx_key = "IDX_" | append: forloop.index0 %}
+      {% assign group = data[idx_key].Predictions %}
+      {% if forloop.first %}
+        {% assign all = group %}
+      {% else %}
+        {% assign all = all | concat: group %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {% assign all = all | sort: "Minutes" %}
   <table class="table">
     <thead>
       <tr>
-        <th><span class="title">Route</span></th>
-        <th><span class="title">Direction</span></th>
-        <th><span class="title">Min</span></th>
+        <th style="padding-right:24px; text-align:left;"><span class="title">Route</span></th>
+        <th style="padding-right:24px; text-align:left;"><span class="title">Direction</span></th>
+        <th style="text-align:left;"><span class="title">Min</span></th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +43,6 @@
 </div>
 <div class="title_bar">
   <img class="image" src="https://upload.wikimedia.org/wikipedia/commons/0/0a/WMATA_Metro_Logo_small.svg" />
-  <span class="title">Bethesda Station</span>
+  <span class="title">{{ trmnl.plugin_settings.custom_fields_values.title_text | default: "WMATA Bus" }}</span>
   <span class="instance">Refreshed at {{ 'now' | date: '%H:%M' }}</span>
 </div>

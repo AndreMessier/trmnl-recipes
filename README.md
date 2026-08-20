@@ -104,6 +104,12 @@ configuration values at render time.
   the wrapped `data.IDX_0.Predictions` shape used for 2+ stops. The template checks
   `stops.size == 1` and branches accordingly; skipping this check works fine with multiple stops
   configured but throws a Liquid "Internal exception" the moment someone configures just one.
+  **Second gotcha**: if you *change* `stop_ids` (e.g. from one stop to three, or vice versa)
+  via the settings UI, the screen can briefly show that same error — LaraPaper's cache-staleness
+  check is purely time-based (`refresh_interval`/`data_stale_minutes`), not aware that a config
+  change invalidated the previously-cached response's shape. It resolves itself on the next
+  natural refetch (within `refresh_interval`, 15 min by default), but there's no way for the
+  recipe itself to force an immediate one from within Liquid.
 
 See [`CUSTOM_PLUGINS.md`](../CUSTOM_PLUGINS.md) in the parent directory for the full writeup,
 including bugs found and fixed in *other* existing recipes along the way (not included in this
